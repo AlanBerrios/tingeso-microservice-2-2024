@@ -50,16 +50,6 @@ public class CreditEvaluationController {
         return ResponseEntity.noContent().build();
     }
 
-    // P1. Simular crédito hipotecario
-    @GetMapping("/simulate")
-    public ResponseEntity<Double> simulateCredit(
-            @RequestParam double principal,
-            @RequestParam double annualInterestRate,
-            @RequestParam int termInYears) {
-        double monthlyPayment = creditEvaluationService.simulateCredit(principal, annualInterestRate, termInYears);
-        return ResponseEntity.ok(monthlyPayment);
-    }
-
     // P4.1 Relación cuota/ingreso
     @GetMapping("/fee-income-relation")
     public ResponseEntity<Double> feeIncomeRelation(

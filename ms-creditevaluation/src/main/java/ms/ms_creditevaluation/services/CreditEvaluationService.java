@@ -2,13 +2,13 @@ package ms.ms_creditevaluation.services;
 
 
 import ms.ms_creditevaluation.repositories.AccountHistoryRepository;
-import ms.ms_creditevaluation.repositories.ClientRepository;
 import ms.ms_creditevaluation.repositories.DebtRepository;
 import ms.ms_creditevaluation.repositories.SavingsAccountRepository;
 import ms.ms_creditevaluation.entities.CreditEvaluationEntity;
-import ms.ms_creditevaluation.entities.ClientEntity;
 import ms.ms_creditevaluation.entities.DebtEntity;
 import ms.ms_creditevaluation.entities.SavingsAccountEntity;
+import ms.ms_creditevaluation.model.ClientEntity;
+import ms.ms_creditevaluation.clients.ClientsFeignClient;
 import ms.ms_creditevaluation.entities.AccountHistoryEntity;
 import ms.ms_creditevaluation.repositories.CreditEvaluationRepository;
 
@@ -26,7 +26,7 @@ public class CreditEvaluationService {
     @Autowired
     CreditEvaluationRepository creditEvaluationRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientsFeignClient clientsFeignClient;
     @Autowired
     private DebtRepository debtRepository;
     @Autowired
@@ -59,22 +59,6 @@ public class CreditEvaluationService {
         }
     }
 
-    // P1 Simulacion del credito hipotecario ------------------
-    // Método para simular el crédito
-    public double simulateCredit(double principal, double annualInterestRate, int termInYears) {
-        // Convertir la tasa de interés anual a mensual y a porcentaje
-        double monthlyInterestRate = annualInterestRate / 12 / 100;
-        // Calcular el número total de pagos (plazo en años * 12)
-        int totalPayments = termInYears * 12;
-
-        // Calcular la cuota mensual usando la fórmula
-        // Principal es el monto del prestamo
-        double monthlyPayment = (principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalPayments)) /
-                (Math.pow(1 + monthlyInterestRate, totalPayments) - 1);
-
-        return Math.round(monthlyPayment); // Retornar la cuota mensual calculada
-    }
-
     // P3. Registro de Credito ------------------
     // Metodo para registrar un credito
 
@@ -93,7 +77,7 @@ public class CreditEvaluationService {
     // P4. R2 Historial crediticio del cliente ------------------
     // Decide si el historial crediticio del cliente es bueno o no
     public boolean clientCreditHistoryIsGood(String rut) {
-        ClientEntity client = clientRepository.findByRut(rut);
+        ClientEntity client = clientsFeignClient.findByRut(rut).getBody();
         String creditHistoryStatus = client.getHistoryStatus();
         Integer pendingDebts = client.getPendingDebts();
         if (creditHistoryStatus.equals("Good") && pendingDebts == 0) {
@@ -111,7 +95,7 @@ public class CreditEvaluationService {
     // Calcula la relación de deuda/ingreso y decide si se acepta o no
     public boolean debtIncomeRelation(String rut) {
         // Obtener al cliente por RUT
-        ClientEntity client = clientRepository.findByRut(rut);
+        ClientEntity client = clientsFeignClient.findByRut(rut).getBody();
         if (client == null) {
             throw new RuntimeException("Cliente no encontrado");
         }
@@ -159,7 +143,7 @@ public class CreditEvaluationService {
     // P4. R6 Edad del solicitante ------------------
     // Metodo que verifica si el cliente puede cumplir con los pagos antes de los 75 años
     public boolean clientAgeCondition(String rut) {
-        ClientEntity client = clientRepository.findByRut(rut);
+        ClientEntity client = clientsFeignClient.findByRut(rut).getBody();
         int currentAge = client.getAge();
 
         // Verificamos si la edad al finalizar el préstamo excede los 75 años
@@ -224,7 +208,7 @@ public class CreditEvaluationService {
     // Función para verificar si el cliente realiza depósitos periódicos y cumplen con el monto mínimo
     public boolean hasRegularDeposits(String rut) {
         // Obtener el cliente por su RUT
-        ClientEntity client = clientRepository.findByRut(rut);
+        ClientEntity client = clientsFeignClient.findByRut(rut).getBody();
         if (client == null) {
             throw new RuntimeException("Cliente no encontrado para el RUT: " + rut);
         }

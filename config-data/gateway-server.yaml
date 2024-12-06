@@ -24,30 +24,35 @@ spring:
         - id: ms-client
           uri: lb://ms-client
           predicates:
-            - Path=/user/**
+            - Path=/clients/**
 
         - id: ms-creditsimulation
           uri: lb://ms-creditsimulation
           predicates:
-            - Path=/executives/simulation/**
+            - Path=/credit-simulations/**
 
-        - id: ms-creditapplication
-          uri: lb://ms-creditapplication
+        - id: ms-creditrequest
+          uri: lb://ms-creditrequest
           predicates:
-            - Path=/executives/application/**,/credit-application/application/**,/document/application/**
+            - Path=/credit-requests/**,/mortgage-loans/**
 
         - id: ms-creditevaluation
           uri: lb://ms-creditevaluation
           predicates:
-            - Path=/executives/evaluate/**,/client-bank-account/evaluate/**,/debt-evaluate/**,/employmentHistory/evaluate/**
+            - Path=/account-history/**,/credit-evaluations/**,/debts/**,/savings-accounts/**
 
-        - id: ms-followrequest
-          uri: lb://ms-followrequest
+        - id: ms-requesttracking
+          uri: lb://ms-requesttracking
           predicates:
-            - Path=/executives/follow-requests/**,/credit-application/follow-request/**
+            - Path=/request-tracking/**
             
         - id: ms-totalcost
           uri: lb://ms-totalcost
           predicates:
-            - Path=/executives/total-cost/**
+            - Path=/loan-cost/**
+
+        - id: ms-userregister
+          uri: lb://ms-userregister
+          predicates:
+            - Path=/client-documents/**,/documentation/**,/jobs/**
       
