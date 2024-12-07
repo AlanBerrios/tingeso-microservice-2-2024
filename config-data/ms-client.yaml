@@ -2,9 +2,9 @@ server:
   port: 8001
 spring:
   datasource:
-    url=jdbc:mysql://localhost:3306/ms_client
-    username=mysql
-    password=1234
+    url: jdbc:mysql://localhost:3306/ms_client
+    username: mysql
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: update
