@@ -2,9 +2,9 @@ server:
   port: 8002
 spring:
   datasource:
-    url=jdbc:mysql://localhost:3306/ms_creditevaluation
-    username=mysql
-    password=1234
+    url: jdbc:mysql://localhost:3306/ms_creditevaluation
+    username: mysql
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: update
