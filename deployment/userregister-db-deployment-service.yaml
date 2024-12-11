@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: userregister-db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/userregister-db-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: userregister-db-pvc
+  labels:
+    app: mysql
+    tier: database
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userregister-db-deployment
+  labels:
+    app: userregister-db-deployment
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: userregister-db-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: userregister-db-deployment
+        tier: database
+    spec:
+      containers:
+        - name: userregister-db
+          image: mysql
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: DB_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: DB_PASSWORD
+          volumeMounts:
+            - name: userregister-db-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: userregister-db-storage
+          persistentVolumeClaim:
+            claimName: userregister-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userregister-db-service
+  labels:
+    app: userregister-db-service
+    tier: database
+spec:
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  selector:
+    app: userregister-db-deployment
+    tier: database
+  type: LoadBalancer
