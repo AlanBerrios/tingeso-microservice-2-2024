@@ -26,22 +26,22 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: mysql-config-map
-                  key: DB_HOST_USER
+                  key: DB_HOST_CLIENT
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
                   name: mysql-config-map
-                  key: DB_PORT_USER
+                  key: DB_PORT_CLIENT
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
                   name: mysql-config-map
-                  key: DB_NAME_USER
-            - name: DB_USER
+                  key: DB_NAME_CLIENT
+            - name: DB_CLIENT
               valueFrom:
                 secretKeyRef:
                   name: mysql-secret
-                  key: DB_USER
+                  key: DB_CLIENT
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
