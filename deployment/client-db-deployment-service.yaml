@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: l-db-pv
+  name: client-db-pv
   labels:
     type: local
 spec:
@@ -16,7 +16,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: l-db-pvc
+  name: client-db-pvc
   labels:
     app: mysql
     tier: database
@@ -31,24 +31,24 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: l-db-deployment
+  name: client-db-deployment
   labels:
-    app: l-db-deployment
+    app: client-db-deployment
     tier: database
 spec:
   selector:
     matchLabels:
-      app: l-db-deployment
+      app: client-db-deployment
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: l-db-deployment
+        app: client-db-deployment
         tier: database
     spec:
       containers:
-        - name: l-db
+        - name: client-db
           image: mysql
           imagePullPolicy: "IfNotPresent"
           ports:
@@ -64,20 +64,25 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: DB_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: DB_PASSWORD
           volumeMounts:
-            - name: l-db-storage
+            - name: client-db-storage
               mountPath: /var/lib/mysql
       volumes:
-        - name: l-db-storage
+        - name: client-db-storage
           persistentVolumeClaim:
-            claimName: l-db-pvc
+            claimName: client-db-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: l-db-service
+  name: client-db-service
   labels:
-    app: l-db-service
+    app: client-db-service
     tier: database
 spec:
   ports:
@@ -85,6 +90,6 @@ spec:
       port: 3306
       targetPort: 3306
   selector:
-    app: l-db-deployment
+    app: client-db-deployment
     tier: database
   type: LoadBalancer
