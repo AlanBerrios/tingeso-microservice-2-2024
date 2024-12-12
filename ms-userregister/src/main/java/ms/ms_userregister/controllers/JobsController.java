@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/jobs")
-@CrossOrigin("*")
 public class JobsController {
 
     @Autowired

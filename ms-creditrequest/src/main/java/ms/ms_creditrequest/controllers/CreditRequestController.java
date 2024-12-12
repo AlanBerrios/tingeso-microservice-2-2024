@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/credit-requests")
-@CrossOrigin("*")
 public class CreditRequestController {
     @Autowired
     CreditRequestService creditRequestService;

@@ -12,7 +12,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/mortgage-loans")
-@CrossOrigin("*")
 public class MortgageLoanController {
     @Autowired
     MortgageLoanService mortgageLoanService;

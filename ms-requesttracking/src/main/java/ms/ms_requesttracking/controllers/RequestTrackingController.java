@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/request-tracking")
-@CrossOrigin("*")
 public class RequestTrackingController {
 
     @Autowired

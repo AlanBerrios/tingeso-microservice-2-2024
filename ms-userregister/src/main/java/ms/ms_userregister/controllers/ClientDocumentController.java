@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/client-documents")
-@CrossOrigin("*")
 public class ClientDocumentController {
 
     @Autowired

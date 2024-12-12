@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/documentation")
-@CrossOrigin("*")
 public class DocumentationController {
 
     @Autowired

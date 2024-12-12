@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/clients")
-@CrossOrigin("*")
 public class ClientController {
 	// Desde el controlador solo puede llamar a clases del servicio (OBLIGATORIO)
 	@Autowired

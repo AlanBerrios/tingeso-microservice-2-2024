@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/account-history")
-@CrossOrigin("*")
 public class AccountHistoryController {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountHistoryController.class);

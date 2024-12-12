@@ -14,7 +14,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/credit-evaluations")
-@CrossOrigin("*")
 public class CreditEvaluationController {
 
     @Autowired
