@@ -37,11 +37,11 @@ spec:
                 configMapKeyRef:
                   name: mysql-config-map
                   key: DB_NAME_CREDITREQUEST
-            - name: DB_USER
+            - name: DB_CLIENT
               valueFrom:
                 secretKeyRef:
                   name: mysql-secret
-                  key: DB_USER
+                  key: DB_CLIENT
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
