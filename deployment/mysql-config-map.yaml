@@ -7,23 +7,22 @@ metadata:
 data:
   DB_HOST_CLIENT: client-db-service
   DB_PORT_CLIENT: "3306"
-  DB_NAME_CLIENT: client-db
+  DB_NAME_CLIENT: client_db
   DB_HOST_CREDITEVALUATION: creditevaluation-db-service
   DB_PORT_CREDITEVALUATION: "3306"
-  DB_NAME_CREDITEVALUATION: creditevaluation-db
+  DB_NAME_CREDITEVALUATION: creditevaluation_db
   DB_HOST_CREDITSIMULATION: creditsimulation-db-service
   DB_PORT_CREDITSIMULATION: "3306"
-  DB_NAME_CREDITSIMULATION: creditsimulation-db
+  DB_NAME_CREDITSIMULATION: creditsimulation_db
   DB_HOST_CREDITREQUEST: creditrequest-db-service
   DB_PORT_CREDITREQUEST: "3306"
-  DB_NAME_CREDITREQUEST: creditrequest-db
+  DB_NAME_CREDITREQUEST: creditrequest_db
   DB_HOST_REQUESTTRACKING: requesttracking-db-service
   DB_PORT_REQUESTTRACKING: "3306"
-  DB_NAME_REQUESTTRACKING: requesttracking-db
+  DB_NAME_REQUESTTRACKING: requesttracking_db
   DB_HOST_TOTALCOST: totalcost-db-service
   DB_PORT_TOTALCOST: "3306"
-  DB_NAME_TOTALCOST: totalcost-db
+  DB_NAME_TOTALCOST: totalcost_db
   DB_HOST_USERREGISTER: userregister-db-service
   DB_PORT_USERREGISTER: "3306"
-  DB_NAME_USERREGISTER: userregister-db
-  
+  DB_NAME_USERREGISTER: userregister_db
